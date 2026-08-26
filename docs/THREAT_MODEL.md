@@ -48,5 +48,5 @@
 - [x] Align meta CSP and HTTP CSP on all hosts (single source of truth).
 
 ### Low
-- [ ] Expand CLI tests for asset content fingerprints after copy.
-- [ ] Document expected minimum authenticator / browser versions for PRF.
+- [x] Expand CLI tests for asset content fingerprints after copy.
+- [x] Document expected minimum authenticator / browser versions for PRF.
