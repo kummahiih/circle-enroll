@@ -44,8 +44,8 @@
 - [x] **Prefer WebAuthn-PRF** for high-value circles; keep password backup enrollment only if recovery is required. (README operator runbook)
 
 ### Medium
-- [ ] Optional **Subresource Integrity** hashes for enroll-*.js when copying into dist (CLI enhancement).
-- [ ] Align meta CSP and HTTP CSP on all hosts (single source of truth).
+- [x] Optional **Subresource Integrity** for enroll-*.js — **deferred**. Same-origin hosting + strict CSP already limit script substitution; SRI adds value mainly when operators mirror assets onto third-party CDNs. Revisit if that becomes a common deployment pattern.
+- [x] Align meta CSP and HTTP CSP on all hosts (single source of truth).
 
 ### Low
 - [ ] Expand CLI tests for asset content fingerprints after copy.
