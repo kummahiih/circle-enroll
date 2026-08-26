@@ -1,6 +1,6 @@
 {
   "name": "@kummahiih/circle-enroll",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Browser enroll assets (PBKDF2 + WebAuthn PRF) for page-scoped password hashes used by private-circle and hello-circle",
   "type": "module",
   "bin": {

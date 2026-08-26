@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ASSETS = path.join(__dirname, '..', 'assets');
-const FILES = ['enroll.html', 'enroll-core.js', 'enroll-prf.js'];
+const FILES = ['enroll.html', 'enroll.css', 'enroll-core.js', 'enroll-prf.js'];
 
 function usage() {
   console.log(`

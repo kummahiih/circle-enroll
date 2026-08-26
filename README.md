@@ -7,6 +7,7 @@ Used by [`@kummahiih/private-circle`](https://github.com/kummahiih/private-circl
 ## Assets
 
 - `assets/enroll.html` — enrollment UI (password or passkey)
+- `assets/enroll.css` — styles (no inline CSS; strict CSP)
 - `assets/enroll-core.js` — PBKDF2 path + shared helpers
 - `assets/enroll-prf.js` — WebAuthn PRF path
 - `assets/enroll-json.md` — JSON schema v1 + same-origin PRF notes
@@ -25,7 +26,7 @@ npm install @kummahiih/circle-enroll
 npx circle-enroll copy --out <dir>
 ```
 
-Writes `enroll.html`, `enroll-core.js`, and `enroll-prf.js` into the target directory.
+Writes `enroll.html`, `enroll.css`, `enroll-core.js`, and `enroll-prf.js` into the target directory.
 
 ## Consumption
 
@@ -42,7 +43,7 @@ npx circle-enroll copy --out dist
 
 Serve enroll on the **same origin** as the gated page for WebAuthn-PRF unlock. Public `circle-enroll.vercel.app` is fine for PBKDF2 hashes but not for PRF across different domains.
 
-CSP: enroll pages use `script-src 'self'` and no network (`connect-src 'none'`).
+CSP: enroll pages use `script-src 'self'`, `style-src 'self'` (external `enroll.css`, no `'unsafe-inline'`), and no network (`connect-src 'none`).
 
 ## License
 

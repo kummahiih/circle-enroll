@@ -8,9 +8,9 @@ import os from 'os';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CLI = path.join(__dirname, '..', 'bin', 'cli.mjs');
-const FILES = ['enroll.html', 'enroll-core.js', 'enroll-prf.js'];
+const FILES = ['enroll.html', 'enroll.css', 'enroll-core.js', 'enroll-prf.js'];
 
-test('copy writes 3 files', () => {
+test('copy writes 4 files', () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'circle-enroll-'));
   const r = spawnSync(process.execPath, [CLI, 'copy', '--out', tmp], {
     encoding: 'utf8',
