@@ -30,6 +30,12 @@ npx circle-enroll copy --out <dir>
 
 Writes `enroll.html`, `enroll.css`, `enroll-core.js`, and `enroll-prf.js` into the target directory.
 
+## WebAuthn PRF support
+
+See [docs/WEBAUTHN_PRF_SUPPORT.md](docs/WEBAUTHN_PRF_SUPPORT.md) and the full matrix in [private-circle](https://github.com/kummahiih/private-circle/blob/main/docs/WEBAUTHN_PRF_SUPPORT.md).
+
+Rough minimums: **Chrome/Edge 116+**, **Safari 18+** (platform only), **Firefox 135+**. Enroll and gate must share origin for PRF.
+
 ## Operator runbook (production)
 
 1. **Same-origin enroll for PRF** — Host `enroll.html` on the **same origin** as the gated page. WebAuthn credentials are RP-ID bound; a public enroll host on a different domain works for PBKDF2 only.
