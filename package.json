@@ -3,10 +3,16 @@
   "version": "0.1.0",
   "description": "Browser enroll assets (PBKDF2 + WebAuthn PRF) for page-scoped password hashes used by private-circle and hello-circle",
   "type": "module",
+  "bin": {
+    "circle-enroll": "./bin/cli.mjs"
+  },
   "files": [
     "assets",
     "bin"
   ],
+  "scripts": {
+    "test": "node --test test/*.mjs"
+  },
   "engines": {
     "node": ">=18"
   },

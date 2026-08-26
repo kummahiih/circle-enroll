@@ -18,11 +18,13 @@ JSON schema **v1** is identical to the private-circle enrollment format.
 npm install @kummahiih/circle-enroll
 ```
 
-Copy assets into your project (CLI coming in a later release):
+## CLI
 
 ```bash
-cp -r node_modules/@kummahiih/circle-enroll/assets/* ./public/
+npx circle-enroll copy --out <dir>
 ```
+
+Writes `enroll.html`, `enroll-core.js`, and `enroll-prf.js` into the target directory.
 
 ## License
 
