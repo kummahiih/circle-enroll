@@ -24,8 +24,8 @@
 
 ### Information disclosure
 - **Password in memory / XSS on enroll page:** CSP reduces script injection; still treat enroll origin as sensitive during typing.
-- **Enroll JSON exposure:** Hash enables offline guessing for PBKDF2 entries. *Mitigation:* private delivery; strong passwords; prefer WebAuthn-PRF.
-- **Legacy demo CSP weaker:** `vercel.json` on this repo still allows `'unsafe-inline'` for old `index.html`. *Mitigation:* use package assets for production; tighten demo host CSP or retire legacy page.
+- **Enroll JSON exposure:** Hash enables offline guessing for PBKDF2 entries. *Mitigation:* private delivery; strong passwords; prefer WebAuthn-PRF; **never commit real hashes to public git; never ship hashes with dist**.
+- **Legacy demo CSP weaker:** historical demo hosts; package path is strict `'self'` only.
 
 ### Denial of service
 - Negligible on static assets. WebAuthn UI cancel is user-driven.
@@ -36,11 +36,11 @@
 ## Prioritized Mitigation Plan
 
 ### Critical
-- [ ] **Production enroll only on the gated site’s origin** (document in ops runbooks; already in UI warning for PRF).
-- [ ] **Never commit enroll JSON with real user hashes to public repos.**
+- [x] **Production enroll only on the gated site’s origin** (document in ops runbooks; already in UI warning for PRF).
+- [x] **Never commit enroll JSON with real user hashes to public repos.** Documented in README + private-circle hygiene.
 
 ### High
-- [ ] **Retire or realign legacy `index.html` + `vercel.json`** with package CSP (`'self'` only, external CSS/JS) so the public demo cannot be mistaken for the strict package path.
+- [x] **Retire or realign legacy `index.html` + `vercel.json`** with package CSP (`'self'` only, external CSS/JS) so the public demo cannot be mistaken for the strict package path.
 - [ ] **Prefer WebAuthn-PRF** for high-value circles; keep password backup enrollment only if recovery is required.
 
 ### Medium

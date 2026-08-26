@@ -1,6 +1,8 @@
 # Enrollment JSON format
 
-Produced by `enroll.html`. Sent privately to the site operator. **Not** deployed.
+Produced by `enroll.html`. Sent **privately** to the site operator. **Not** deployed.
+
+**Never commit real user hashes to public git. Never publish enroll JSON with the gated `dist/`.**
 
 ## Password (PBKDF2)
 
