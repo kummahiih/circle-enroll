@@ -6,13 +6,15 @@ Used by [`@kummahiih/private-circle`](https://github.com/kummahiih/private-circl
 
 ## Assets
 
-- `assets/enroll.html` — enrollment UI (password or passkey)
-- `assets/enroll.css` — styles (no inline CSS; strict CSP)
-- `assets/enroll-core.js` — PBKDF2 path + shared helpers
-- `assets/enroll-prf.js` — WebAuthn PRF path
-- `assets/enroll-json.md` — JSON schema v1 + same-origin PRF notes
+| File | Role |
+|------|------|
+| `assets/enroll.html` | Enrollment UI (password or passkey) |
+| `assets/enroll.css` | Styles (same-origin file; no inline CSS) |
+| `assets/enroll-core.js` | PBKDF2 path + shared helpers |
+| `assets/enroll-prf.js` | WebAuthn PRF path |
+| `assets/enroll-json.md` | JSON schema v1 + same-origin PRF notes |
 
-JSON schema **v1** is identical to the private-circle enrollment format.
+JSON schema **v1** matches private-circle enrollment format.
 
 ## Install
 
@@ -28,19 +30,17 @@ npx circle-enroll copy --out <dir>
 
 Writes `enroll.html`, `enroll.css`, `enroll-core.js`, and `enroll-prf.js` into the target directory.
 
-## Content Security Policy
+## Content Security Policy (strict)
 
-**No nonces — static external assets only.**
+**Same-origin static assets only** — not third-party CDNs, not inline code, not nonces.
 
-Enroll is designed for pure static hosting (no SSR, no edge HTML rewrite). CSP is enforced with external files, not per-request nonces:
-
-| Directive | Value | Why |
-|-----------|--------|-----|
+| Directive | Value | Assets |
+|-----------|--------|--------|
 | `script-src` | `'self'` | `enroll-core.js`, `enroll-prf.js` |
-| `style-src` | `'self'` | `enroll.css` (no inline `<style>`) |
+| `style-src` | `'self'` | `enroll.css` |
 | `connect-src` | `'none'` | No network on enroll |
-| `'unsafe-inline'` | **not used** | Avoided entirely |
-| Nonces / `'strict-dynamic'` | **not used** | Require dynamic HTML; break offline static `dist/` |
+| `'unsafe-inline'` / `'unsafe-eval'` | **not used** | — |
+| Nonces / `'strict-dynamic'` | **not used** | Need dynamic HTML; break offline static hosting |
 
 Default meta CSP on `enroll.html`:
 
@@ -50,22 +50,21 @@ script-src 'self'; style-src 'self'; connect-src 'none';
 img-src 'none'; font-src 'none'; object-src 'none'; frame-ancestors 'none'
 ```
 
-Prefer the **HTTP CSP header** (e.g. Vercel `headers`) as the source of truth; keep the meta tag aligned or omit it to avoid intersection surprises.
+Prefer the **HTTP CSP header** (e.g. Vercel `headers`) as the source of truth; keep the meta tag aligned or omit it.
 
 ## Consumption
 
 ### private-circle
 
-`@kummahiih/private-circle` resolves enroll assets from this package (via `require.resolve`) when encrypting or running `init`. Gate assets (`gate.js` / `gate.css`) stay in private-circle.
+`@kummahiih/private-circle` resolves enroll assets from this package when encrypting or running `init`. Gate assets (`gate.js` / `gate.css`) stay in private-circle.
 
 ### hello-circle / your site
 
 ```bash
 npx circle-enroll copy --out dist
-# or include in build before encrypt
 ```
 
-Serve enroll on the **same origin** as the gated page for WebAuthn-PRF unlock. Public `circle-enroll.vercel.app` is fine for PBKDF2 hashes but not for PRF across different domains.
+Serve enroll on the **same origin** as the gated page for WebAuthn-PRF unlock. A public enroll host on a different domain works for PBKDF2 hashes only.
 
 ## License
 
