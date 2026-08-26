@@ -30,6 +30,17 @@ npx circle-enroll copy --out <dir>
 
 Writes `enroll.html`, `enroll.css`, `enroll-core.js`, and `enroll-prf.js` into the target directory.
 
+## Hashes hygiene
+
+Enrollment JSON is **operator-private**:
+
+- **Never commit real user hashes** (enroll JSON) to a public repository.
+- **Never publish enroll JSON with the gated `dist/`** — only the encrypted loader + masks belong on the CDN.
+- Demo sites may ship labeled public demo hashes only.
+- If hashes may have leaked together with published masks, rotate the build key and re-enroll.
+
+See `@kummahiih/private-circle` security notes and threat model for the full operator runbook.
+
 ## Content Security Policy (strict)
 
 **Same-origin static assets only** — not third-party CDNs, not inline code, not nonces.
