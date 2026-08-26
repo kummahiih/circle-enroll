@@ -30,16 +30,14 @@ npx circle-enroll copy --out <dir>
 
 Writes `enroll.html`, `enroll.css`, `enroll-core.js`, and `enroll-prf.js` into the target directory.
 
-## Hashes hygiene
+## Operator runbook (production)
 
-Enrollment JSON is **operator-private**:
+1. **Same-origin enroll for PRF** — Host `enroll.html` on the **same origin** as the gated page. WebAuthn credentials are RP-ID bound; a public enroll host on a different domain works for PBKDF2 only.
+2. **Prefer WebAuthn-PRF** for high-value circles (smaller offline attack surface). Keep a **password backup** enrollment if recovery after passkey loss is required.
+3. **Hashes hygiene** — Never commit real user hashes to public git; never publish enroll JSON with `dist/`. Demo sites may ship labeled public demo hashes only.
+4. **Rotate on leak** — If hashes may have leaked together with published masks, rotate the build key `K` and re-enroll everyone.
 
-- **Never commit real user hashes** (enroll JSON) to a public repository.
-- **Never publish enroll JSON with the gated `dist/`** — only the encrypted loader + masks belong on the CDN.
-- Demo sites may ship labeled public demo hashes only.
-- If hashes may have leaked together with published masks, rotate the build key and re-enroll.
-
-See `@kummahiih/private-circle` security notes and threat model for the full operator runbook.
+Full detail: [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) and [`@kummahiih/private-circle` security notes](https://github.com/kummahiih/private-circle/blob/main/assets/security.md).
 
 ## Content Security Policy (strict)
 
@@ -75,7 +73,7 @@ Prefer the **HTTP CSP header** (e.g. Vercel `headers`) as the source of truth; k
 npx circle-enroll copy --out dist
 ```
 
-Serve enroll on the **same origin** as the gated page for WebAuthn-PRF unlock. A public enroll host on a different domain works for PBKDF2 hashes only.
+Serve enroll on the **same origin** as the gated page for WebAuthn-PRF unlock.
 
 ## License
 

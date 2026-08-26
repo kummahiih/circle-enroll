@@ -36,12 +36,12 @@
 ## Prioritized Mitigation Plan
 
 ### Critical
-- [x] **Production enroll only on the gated site’s origin** (document in ops runbooks; already in UI warning for PRF).
+- [x] **Production enroll only on the gated site’s origin** (ops runbook in README; UI warning for PRF).
 - [x] **Never commit enroll JSON with real user hashes to public repos.** Documented in README + private-circle hygiene.
 
 ### High
-- [x] **Retire or realign legacy `index.html` + `vercel.json`** with package CSP (`'self'` only, external CSS/JS) so the public demo cannot be mistaken for the strict package path.
-- [ ] **Prefer WebAuthn-PRF** for high-value circles; keep password backup enrollment only if recovery is required.
+- [x] **Retire or realign legacy `index.html` + `vercel.json`** with package CSP (`'self'` only, external CSS/JS).
+- [x] **Prefer WebAuthn-PRF** for high-value circles; keep password backup enrollment only if recovery is required. (README operator runbook)
 
 ### Medium
 - [ ] Optional **Subresource Integrity** hashes for enroll-*.js when copying into dist (CLI enhancement).
