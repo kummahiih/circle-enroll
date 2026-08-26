@@ -1,0 +1,31 @@
+{
+  "name": "@kummahiih/circle-enroll",
+  "version": "0.1.0",
+  "description": "Browser enroll assets (PBKDF2 + WebAuthn PRF) for page-scoped password hashes used by private-circle and hello-circle",
+  "type": "module",
+  "files": [
+    "assets",
+    "bin"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "webauthn",
+    "prf",
+    "pbkdf2",
+    "enroll",
+    "static",
+    "offline",
+    "passkey",
+    "aes-gcm"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kummahiih/circle-enroll"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
