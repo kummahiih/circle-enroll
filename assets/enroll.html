@@ -17,8 +17,11 @@
       Hash sidotaan sivun tunnisteeseen (<code>pageId</code>).
     </p>
 
-    <label for="pageId">Sivun tunniste (pageId) *</label>
-    <input id="pageId" type="text" autocomplete="off" placeholder="esim. metsa-piiri" />
+    <p id="pageId-fixed" class="note" hidden>pageId: <code id="pageId-display"></code></p>
+    <div id="pageId-block">
+      <label for="pageId">Sivun tunniste (pageId) *</label>
+      <input id="pageId" type="text" autocomplete="off" placeholder="esim. metsa-piiri" />
+    </div>
 
     <label for="label">Nimesi / tunniste (valinnainen)</label>
     <input id="label" type="text" autocomplete="name" placeholder="esim. Matti" />
@@ -50,7 +53,7 @@
       Älä lähetä JSON-tiedostoa tavallisella sähköpostilla, jos voit välttää sen —
       hash on salainen materiaali. Käytä sovittua turvallista kanavaa.
       <br /><br />
-      Esitäyttö: <code>?page=metsa-piiri</code>
+      Esitäyttö (unlocked): <code>?page=metsa-piiri</code>
     </p>
   </main>
 
