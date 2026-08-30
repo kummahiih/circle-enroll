@@ -16,6 +16,18 @@ Used by [`@kummahiih/private-circle`](https://github.com/kummahiih/private-circl
 
 JSON schema **v1** matches private-circle enrollment format.
 
+## Lock pageId (gated sites)
+
+Public copy (`npx circle-enroll copy` / circle-enroll.vercel.app) stays **editable**: the pageId field is shown and can be prefilled with `?page=`.
+
+When `private-circle encrypt` copies enroll into `dist/`, it stamps the root element:
+
+```html
+<html lang="fi" data-page-id="my-site" data-lock-page-id="1">
+```
+
+Then `applyPageIdLock` hides the pageId input and shows the fixed id. The hidden `#pageId` input stays filled so the PRF script does not change. Encrypt default is lock-on; `--no-lock-page-id` leaves the field editable.
+
 ## Install
 
 ```bash
@@ -71,7 +83,7 @@ Prefer the **HTTP CSP header** (e.g. Vercel `headers`) as the source of truth; k
 
 ### private-circle
 
-`@kummahiih/private-circle` resolves enroll assets from this package when encrypting or running `init`. Gate assets (`gate.js` / `gate.css`) stay in private-circle.
+`@kummahiih/private-circle` resolves enroll assets from this package when encrypting or running `init`. Gate assets (`gate.js` / `gate.css`) stay in private-circle. Encrypt stamps `data-page-id` from `--page-id` unless `--no-lock-page-id`.
 
 ### hello-circle / your site
 
