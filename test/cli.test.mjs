@@ -60,3 +60,23 @@ test('copy fails without --out', () => {
   const r = spawnSync(process.execPath, [CLI, 'copy'], { encoding: 'utf8' });
   assert.notEqual(r.status, 0);
 });
+
+test('unlocked enroll.html keeps an editable pageId field', () => {
+  const html = fs.readFileSync(path.join(ASSETS, 'enroll.html'), 'utf8');
+  assert.match(html, /<html lang="fi">/);
+  assert.doesNotMatch(html, /data-lock-page-id/);
+  assert.doesNotMatch(html, /data-page-id=/);
+  assert.match(html, /id="pageId-block"/);
+  assert.match(html, /<input id="pageId"/);
+  assert.match(html, /id="pageId-fixed"[^>]*hidden/);
+});
+
+test('enroll-core.js applies lock from stamped html attributes', () => {
+  const js = fs.readFileSync(path.join(ASSETS, 'enroll-core.js'), 'utf8');
+  assert.match(js, /function applyPageIdLock/);
+  assert.match(js, /data-lock-page-id/);
+  assert.match(js, /data-page-id/);
+  assert.match(js, /pageId-block/);
+  assert.match(js, /pageId-fixed/);
+  assert.match(js, /applyPageIdLock\(\)/);
+});
