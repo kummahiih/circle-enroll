@@ -57,7 +57,7 @@
       var fixed = $("pageId-fixed");
       var disp = $("pageId-display");
       if (disp) disp.textContent = shown;
-      if (fixed) fixed.hidden = false;
+      if (fixed) fixed.hidden = true;
     }
   }
 
