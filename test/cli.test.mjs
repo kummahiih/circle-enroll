@@ -78,5 +78,6 @@ test('enroll-core.js applies lock from stamped html attributes', () => {
   assert.match(js, /data-page-id/);
   assert.match(js, /pageId-block/);
   assert.match(js, /pageId-fixed/);
+  assert.match(js, /if \(fixed\) fixed\.hidden = true/);
   assert.match(js, /applyPageIdLock\(\)/);
 });

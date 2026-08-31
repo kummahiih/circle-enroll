@@ -26,7 +26,7 @@ When `private-circle encrypt` copies enroll into `dist/`, it stamps the root ele
 <html lang="fi" data-page-id="my-site" data-lock-page-id="1">
 ```
 
-Then `applyPageIdLock` hides the pageId input and shows the fixed id. The hidden `#pageId` input stays filled so the PRF script does not change. Encrypt default is lock-on; `--no-lock-page-id` leaves the field editable.
+Then `applyPageIdLock` hides the pageId input **and** the `#pageId-fixed` chip. The hidden `#pageId` input stays filled so the PRF script does not change. Encrypt default is lock-on; `--no-lock-page-id` leaves the field editable.
 
 ## Install
 
