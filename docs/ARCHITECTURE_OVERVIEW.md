@@ -4,22 +4,24 @@
 
 `@kummahiih/circle-enroll` is a small npm package that ships **browser-only enrollment assets** for page-scoped password / passkey material. Operators and end users run enroll in the browser; the result is a JSON file (hash, never the password) delivered out-of-band to the site operator. The package is consumed by `@kummahiih/private-circle` and demo sites such as hello-circle.
 
-There is no backend runtime. Optional static hosting (`index.html` + Vercel) is a convenience demo, not part of the package contract.
+There is no backend runtime. Optional static hosting (Vercel rewrite → `assets/enroll.html`) is a convenience demo, not part of the package contract.
 
 ## System Components
 
 | Component | Path | Role |
 |-----------|------|------|
 | Package manifest | `package.json` | Name `@kummahiih/circle-enroll`, bin, `files: [assets, bin]` |
-| Enroll UI | `assets/enroll.html` | Form + strict CSP meta; links same-origin CSS/JS |
-| Styles | `assets/enroll.css` | All presentation (no inline styles) |
-| PBKDF2 path | `assets/enroll-core.js` | Salt, PBKDF2-SHA256 (310k), download/copy JSON |
+| Enroll UI | `assets/enroll.html` | Form + strict CSP meta (`style-src 'self'`); links same-origin CSS/JS |
+| Styles | `assets/enroll.css` | All presentation (no inline styles, no `'unsafe-inline'`) |
+| PBKDF2 path | `assets/enroll-core.js` | Salt, PBKDF2-SHA256 (310k), pageId lock, download/copy JSON |
 | WebAuthn PRF path | `assets/enroll-prf.js` | Passkey create/get + PRF eval; page-scoped salt |
 | Schema notes | `assets/enroll-json.md` | JSON v1 shape and origin constraints |
 | CLI | `bin/cli.mjs` | `circle-enroll copy --out <dir>` copies the four runtime assets |
 | Tests | `test/cli.test.mjs` | Asserts copy writes four files |
 | Publish | `.github/workflows/publish.yml` | `npm test` then `npm publish` with `NPM_TOKEN` |
-| Legacy demo | `index.html`, `vercel.json` | Older single-page demo host (not package assets) |
+| Demo host | `vercel.json`, `robots.txt` | Rewrites `/` → `assets/enroll`; HTTP CSP matches meta (`'self'` only) |
+
+There is **no** repo-root `index.html`. The old single-file demo was retired in favor of the package assets.
 
 ## Data Flow
 
@@ -44,8 +46,9 @@ No enroll data is sent to a network service from the enroll page (`connect-src '
 
 - **npm package API:** filesystem assets + `bin` CLI; no programmatic JS exports of crypto helpers.
 - **Consumers:** `require.resolve('@kummahiih/circle-enroll/package.json')` from private-circle to locate `assets/`.
+- **Consumer pitfall:** `private-circle encrypt` copies `./enroll.html` from the consumer cwd **before** this package. A forked inline-CSS enroll.html reintroduces `'unsafe-inline'`. Keep forks in sync or delete them.
 - **Publishing:** workflow_dispatch / tag → test → `npm publish --access public`.
 
 ## Workspace / Package Boundary
 
-Published tarball includes only `assets/` and `bin/` (plus standard npm metadata files). Tests, `docs/`, legacy `index.html`, and Vercel config are development/hosting concerns outside the runtime contract for gated sites.
+Published tarball includes only `assets/` and `bin/` (plus standard npm metadata files). Tests, `docs/`, and Vercel config are development/hosting concerns outside the runtime contract for gated sites.
